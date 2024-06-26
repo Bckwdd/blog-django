@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post
+from .models import Post, Comment
 
 
 @admin.register(Post)
@@ -12,3 +12,10 @@ class PostAdmin(admin.ModelAdmin):
     raw_id_fields = ['author'] #заменяет стандартное поле выбора (dropdown) для поля author на текстовое поле с возможностью ввода ID.
     date_hierarchy = 'publish' #добавляет навигационную ссылку для фильтрации объектов по дате в верхней части административной панели.
     ordering = ['status', 'publish'] #Сортировка, сначала по статусу, а потом по публикации
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'post', 'created', 'active']
+    list_filter = ['active', 'created', 'updated']
+    search_fields = ['name', 'email', 'body']
